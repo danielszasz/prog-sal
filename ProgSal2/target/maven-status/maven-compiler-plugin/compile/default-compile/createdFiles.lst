@@ -1,0 +1,13 @@
+ro\scoalainformala\dao\UserRoleDAO.class
+ro\scoalainformala\pojo\Company.class
+ro\scoalainformala\dao\CompanyDAO.class
+ro\scoalainformala\pojo\Users.class
+ro\scoalainformala\controllers\CompanyController.class
+ro\scoalainformala\controllers\IndexController.class
+ro\scoalainformala\pojo\UserRoles.class
+ro\scoalainformala\pojo\Person.class
+ro\scoalainformala\dao\UsersDAO.class
+ro\scoalainformala\pojo\Contract.class
+ro\scoalainformala\dao\PersonDAO.class
+ro\scoalainformala\controllers\UserController.class
+ro\scoalainformala\helper\DBHelper.class
