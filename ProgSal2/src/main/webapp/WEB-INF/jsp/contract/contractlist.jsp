@@ -38,10 +38,7 @@
 				<td><c:out value="${contract.endContr}" /></td>
 				<td><c:out value="${contract.salary}" /></td>
 				<td><a
-					href='../contract/edit.htm?contractid=<c:out value="${contract.id}"/>'><input
-						type="button" value="Edit"></a></td>
-				<td><a
-					href='../contract/calcul.htm?contractid=<c:out value="${contract.id}"/>'><input
+					href='../contract/salary.htm?contractid=<c:out value="${contract.id}"/>'><input
 						type="button" value="Calculate Salary"></a></td>
 			</tr>
 		</c:forEach>

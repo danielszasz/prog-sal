@@ -14,7 +14,7 @@
 </head>
 <body>
 	<table>
-	
+
 		<tr>
 			<th>Name</th>
 			<th>1</th>
@@ -51,33 +51,38 @@
 			<th>WH</th>
 		</tr>
 		<form:form action="save" method="post" modelAttribute="pontaj">
-		<c:forEach var="contract" items="${model.contractList}"	varStatus="statusC">
-			<tr>
-				<c:forEach var="employee" items="${model.employeeList}"	varStatus="statusE">
-					<c:if test="${statusC.count==statusE.count}">
-						<td><c:out value="${employee.firstName} ${employee.lastName}" /></td>
-						<c:forEach var="pontaj" items="${model.pontajList}"	varStatus="statusP">
-							<c:if test="${statusC.count==statusP.count}">
-								<c:forEach var="days" items="${pontaj.days}">
-										<form:hidden path="id"/>
-									<c:choose>
-										<c:when test="${days!=0}">
-											<td><form:input path="days" value="${days}"/></td>
-										</c:when>
-										<c:otherwise>
-											<td><input value="" ></td>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								<td><c:out value="${pontaj.workedHours}" /></td>
-							</c:if>
+			<c:forEach var="contract" items="${model.contractList}"
+				varStatus="statusC">
+				<tr>
+					<c:forEach var="employee" items="${model.employeeList}"
+						varStatus="statusE">
+						<c:if test="${statusC.count==statusE.count}">
+							<td><c:out
+									value="${employee.firstName} ${employee.lastName}" /></td>
+							<c:forEach var="pontaj" items="${model.pontajList}"
+								varStatus="statusP">
+								<c:if test="${statusC.count==statusP.count}">
+									<c:forEach var="days" items="${pontaj.days}">
+										<form:hidden path="id" />
+										<c:choose>
+											<c:when test="${days!=0}">
+												<td><form:input path="days" value="${days}" /></td>
+											</c:when>
+											<c:otherwise>
+												<td><input value=""></td>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<td><c:out value="${pontaj.workedHours}" /></td>
 
-						</c:forEach>
-					</c:if>
-				</c:forEach>
-		</c:forEach>
-	
-	</table><br>
-	<input type="submit" value="Save"/></form:form>
+								</c:if>
+							</c:forEach>
+						</c:if>
+					</c:forEach>
+			</c:forEach>
+	</table>
+	<br>
+	<input type="submit" value="Save" />
+	</form:form>
 </body>
 </html>

@@ -14,14 +14,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ro.scoalainformala.calculator.SalarCalculator;
 import ro.scoalainformala.dao.ContractDAO;
 import ro.scoalainformala.dao.EmployeeDAO;
 import ro.scoalainformala.helper.ActiveUserHelper;
 import ro.scoalainformala.pojo.Company;
 import ro.scoalainformala.pojo.Contract;
 import ro.scoalainformala.pojo.Employee;
+import ro.scoalainformala.pojo.Users;
 
 @Controller
 @RequestMapping(value = "/contract")
@@ -50,7 +53,7 @@ public class ContractController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public void addContract(@ModelAttribute("contractForm") Contract contract, BindingResult result, ModelMap model,
 			Principal principal, HttpServletResponse response) throws IOException {
-		
+
 		Company company = ActiveUserHelper.getActiveCompany(principal);
 		Contract contractObj = new Contract();
 		contractObj.setEmployeeId(contract.getEmployeeId());
@@ -64,7 +67,7 @@ public class ContractController {
 		contractObj.setSalaryType(contract.getSalaryType());
 		contractObj.setSalary(contract.getSalary());
 		contractObj.setCo(contract.getCo());
-	
+
 		try {
 			ContractDAO.createContract(contractObj);
 		} catch (SQLException e) {
@@ -77,13 +80,14 @@ public class ContractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView displayContractList(ModelMap model, Principal principal) {
 		Company company = ActiveUserHelper.getActiveCompany(principal);
-		
+
 		List<Contract> contractList;
 		List<Employee> employeeList;
 		try {
-			contractList = ContractDAO.getContracts(company.getId(),company.getCurrentYear(),company.getCurrentMonth());
-		
-			employeeList= EmployeeDAO.getEmployeesWithContract(company.getId(), contractList);
+			contractList = ContractDAO.getContracts(company.getId(), company.getCurrentYear(),
+					company.getCurrentMonth());
+
+			employeeList = EmployeeDAO.getEmployeesWithContract(company.getId(), contractList);
 			model = ActiveUserHelper.showUserCompany(principal);
 			model.put("contractList", contractList);
 			model.put("employeeList", employeeList);
@@ -92,7 +96,15 @@ public class ContractController {
 		}
 		return new ModelAndView("/contract/contractlist", "model", model);
 	}
-	
-	
-	
+
+	@RequestMapping(value = "/salary", method = RequestMethod.GET)
+	public ModelAndView displaySalar(@RequestParam("contractid") String contractId, ModelMap model,
+			Principal principal) {
+		int salary;
+		Users user = ActiveUserHelper.getActiveUser(principal);
+		salary = SalarCalculator.calcSalar(Integer.parseInt(contractId), user);
+		model.put("salary", salary);
+
+		return new ModelAndView("/contract/contractsalary", "model", model);
+	}
 }

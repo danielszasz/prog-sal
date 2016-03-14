@@ -1,4 +1,4 @@
-package ro.scoalainformala.calculator;
+package ro.scoalainformala.helper;
 
 import java.sql.SQLException;
 
@@ -74,7 +74,7 @@ public class SalarCalculator {
 		contributiiP.setSomAsig((contributii.getSomAsig() * salarBrut) / 100);
 
 		// salar impozabil
-		salarImp = salarBrut - Math.round(contributiiP.getCasAsig()) - Math.round(contributiiP.getCassAsig())
+		salarImp = contract.getSalary() - Math.round(contributiiP.getCasAsig()) - Math.round(contributiiP.getCassAsig())
 				- Math.round(contributiiP.getSomAsig()) - dedPers;
 
 		// impozit salar
@@ -83,7 +83,7 @@ public class SalarCalculator {
 
 		// salar net
 
-		salarNet = 	salarImp - impSalar+dedPers;
+		salarNet = salarImp - impSalar;
 		return salarNet;
 
 	}
